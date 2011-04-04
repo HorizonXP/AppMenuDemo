@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<application xmlns="http://ns.adobe.com/air/application/2.5">
+
+    <id>AppMenuDemo</id>
+    <filename>AppMenuDemo</filename>
+    <name>AppMenuDemo</name>
+    <versionNumber>1.0.0</versionNumber>
+
+    <initialWindow>
+        <content>AppMenuDemo.swf</content>
+        <systemChrome>none</systemChrome>
+        <transparent>false</transparent>
+        <autoOrients>false</autoOrients>
+        <aspectRatio>landscape</aspectRatio>
+    </initialWindow>
+</application>
