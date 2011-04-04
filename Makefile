@@ -18,10 +18,10 @@
 #        Makefile ..... this file
 #        www/ ......... WebWorks app (HTML / CSS / JS / etc)
 #
-.SILENT: build clean
+# .SILENT: build clean
 
 ADDRESS  = 172.16.207.130
-PASSWORD = "password"
+PASSWORD = password
 SDK_DIR  = ~/Development/blackberry-tablet-sdk-0.9.4
 
 # Change for Windows environments (.exe)
@@ -40,15 +40,16 @@ ASSETS_DIR = assets
 
 build: clean
 	mkdir -p ${BUILD_DIR}
-	${AMXMLC_BIN} ${SRC_DIR}/${SRC_FILE} -debug -library-path+=${LIB_DIR} -output ${BUILD_DIR}/${SWF_FILE}
-	${AIRPKG_BIN} -package ${BUILD_DIR}/${BAR_FILE} -target bar-debug ${SRC_DIR}/${XML_FILE} ${BUILD_DIR}/${SWF_FILE} ${ASSETS_DIR}
-	${DEPLOY_BIN} -installApp -password ${PASSWORD} -device ${ADDRESS} -package ${BUILD_DIR}/${BAR_FILE}
+	${AMXMLC_BIN} -debug -library-path+=${LIB_DIR} ${SRC_DIR}/${SRC_FILE} -output ${BUILD_DIR}/${SWF_FILE}
+	cd ${BUILD_DIR}; ${AIRPKG_BIN} -package ${BAR_FILE} -target bar-debug ../${SRC_DIR}/${XML_FILE} ${SWF_FILE} ../${ASSETS_DIR} -devMode
+	cd ${BUILD_DIR}; ${DEPLOY_BIN} -installApp -launchApp -password ${PASSWORD} -device ${ADDRESS} -package ${BAR_FILE}
+
 
 release: clean
 	mkdir -p ${BUILD_DIR}
 	${AMXMLC_BIN} ${SRC_DIR}/${SRC_FILE} -library-path+=${LIB_DIR} -output ${BUILD_DIR}/${SWF_FILE}
-	${AIRPKG_BIN} -package ${BUILD_DIR}/${BAR_FILE} -target bar ${SRC_DIR}/${XML_FILE} ${BUILD_DIR}/${SWF_FILE} ${ASSETS_DIR}
-	${DEPLOY_BIN} -installApp -password ${PASSWORD} -device ${ADDRESS} -package ${BUILD_DIR}/${BAR_FILE}
+	cd ${BUILD_DIR}; ${AIRPKG_BIN} -package ${BAR_FILE} -target bar-debug ../${SRC_DIR}/${XML_FILE} ${SWF_FILE} ../${ASSETS_DIR} 
+	cd ${BUILD_DIR}; ${DEPLOY_BIN} -installApp -launchApp -password ${PASSWORD} -device ${ADDRESS} -package ${BAR_FILE}
 
 clean:
 	if test -d ${BUILD_DIR}; then \
